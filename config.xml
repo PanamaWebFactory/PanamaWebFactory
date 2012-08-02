@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.pwf.masmovilapp"
+    version   = "1.1.0">
+<WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+/>
+<name>Mas Movil Shopping App</name>
+
+<description>
+Aplicación que te permitirá realizar compras, pagos y recargas directamente desde tu celular y con cargo a tu saldo prepago o a tu cuenta postpago. Es fácil, rápido y seguro.
+</description>
+
+<author href="http://www.panamawebfactory.com" email="bmunoz@panamawebfactory.com">
+Bolívar Muñoz - Panama Web Factory, Inc.
+</author>
+
+<icon src="icon.png" />
+<icon src="icons/ios/icon.png" width="57" height="57" />
+<icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+<icon src="icons/ios/icon_at_2x.png" width="114" height="114" />
+
+<icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+<icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+<icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+<icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+
+<icon src="icons/bb/icon.png" gap:platform="blackberry" />
+<icon src="icons/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/>
+
+<icon src="icons/winphone/icon.png" gap:platform="winphone" />
+
+<icon src="icons/webos/icon.png" gap:platform="webos" />
+
+<gap:splash src="splash.png" />
+
+<gap:splash src="splash/ios/Default.png" width="320" height="480" />
+<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
+<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
+<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
+
+<!--<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />-->
+
+<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" />
+
+<gap:splash src="splash/winphone/splash.jpg" gap:platform="winphone" />
+
+<gap:plugin name="childbrowser" version="~2" />
+
+<preference name="phonegap-version" value="1.7.0" />
+<preference name="orientation" value="default" />
+<preference name="target-device" value="universal" />
+<preference name="fullscreen" value="true" />
+<preference name="prerendered-icon" value="true" />
+<preference name="stay-in-webview" value="true" />
+<preference name="ios-statusbarstyle" value="black-translucent" />
+<preference name="android-installLocation" value="internalOnly" />
+
+<feature name="http://api.phonegap.com/1.0/file"/>
+<feature name="http://api.phonegap.com/1.0/geolocation"/>
+<feature name="http://api.phonegap.com/1.0/network"/>
+<feature name="http://api.phonegap.com/1.0/notification"/>
+<feature name="http://plugins.phonegap.com/childbrowser/2.0.1" />
+
+<plugin name="Device" value="org.apache.cordova.Device" />
+<plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager" />
+<plugin name="Notification" value="org.apache.cordova.Notification"/>
+<plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
+<plugin name="ChildBrowser" value="com.phonegap.plugins.childBrowser.ChildBrowser"/>
+
+<access uri="http://www.mobilegatewaypanama.com/*" subdomains="true" browserOnly="true" />
+</widget>

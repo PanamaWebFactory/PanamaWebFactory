@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Mas Movil Shopping App</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8">
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+		<link rel="stylesheet" href="my.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+        <script src="my.js"></script>
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
+        <script type="text/javascript">
+		function onDeviceReady() {
+	var childBrowser = ChildBrowser.install();
+	var networkState = navigator.network.connection.type;
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    if (states[networkState] != 'No network connection'){
+		window.plugins.childBrowser.showWebPage('http://www.mobilegatewaypanama.com/movil/',
+                                        { showLocationBar: false });							
+		<!--navigator.app.loadUrl('http://www.mobilegatewaypanama.com/movil/');-->
+	} else {
+		showAlert();
+	}
+    }
+	
+	function alertDismissed() {
+    navigator.app.exitApp();
+}
+
+function showAlert() {
+        navigator.notification.alert(
+            'Lo sentimos pero necesitas data activa para usar esta aplicación!',  // message
+            alertDismissed,         // callback
+            'Alerta',            // title
+            'Cerrar'                  // buttonName
+        );
+		navigator.notification.beep(3);
+    }
+	
+	function init() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+		document.addEventListener("backbutton",showConfirm, false);	
+    }
+	
+	function showConfirm() {
+    navigator.notification.confirm(
+        '¿Desea cerrar la aplicación?',  // message
+        navigator.app.exitApp(),              // callback to invoke with index of button pressed
+        'Alerta',            // title
+        'Sí,No'          // buttonLabels
+    );
+}		
+        </script>
+    </head>
+    <body onLoad="init()">
+	<div data-role="page" id="page1">
+<div align="center" style="padding: 15px" data-role="content">
+                <div style=" text-align:center">
+                		<h3>Otra Producción de</h3>
+						<img src="http://www.mobilegatewaypanama.com/images/mobile/logo_pwf.png" width="300" height="164">
+<p>Creamos experiencias únicas para los usuarios de sus aplicaciones web, mobile y tablet.</p>
+                		<p>Estamos a su disposición para ofrecerle una solución proactiva a sus necesidades.</p>
+						<p>&nbsp;</p>
+                		<a data-role="button" data-transition="none" data-theme="b" href="mailto:bmunoz@panamawebfactory.com">
+                    Contáctenos
+                </a>
+				<p>&nbsp;</p>
+				<p class="copyright" align="center">Derechos Reservados &copy; Panama Web Factory, Inc.</p>
+				</div>
+            </div>
+
+    </div>
+	</body>
+</html>
+
