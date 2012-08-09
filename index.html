@@ -2,86 +2,81 @@
 <html>
     <head>
     <title>Mas Movil Shopping App</title>
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
         <meta charset="utf-8">
 		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 		<link rel="stylesheet" href="my.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-        <script src="my.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-		<script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
+		<script src="main.js"></script>
         <script type="text/javascript">
-		function onDeviceReady() {
-	var childBrowser = ChildBrowser.install();
-	var networkState = navigator.network.connection.type;
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.NONE]     = 'No network connection';
-
-    if (states[networkState] != 'No network connection'){
-		window.plugins.childBrowser.showWebPage('http://www.mobilegatewaypanama.com/movil/',
-                                        { showLocationBar: false });							
-		<!--navigator.app.loadUrl('http://www.mobilegatewaypanama.com/movil/');-->
-	} else {
-		showAlert();
-	}
+		$( document ).bind( "mobileinit", function() {
+    // Make your jQuery Mobile framework configuration changes here!
+	$.support.cors = true;
+    $.mobile.allowCrossDomainPages = true;
+	$.mobile.pageLoadErrorMessage = "Cargando...";
+  });
+		
+		function handleLogin() {
+    var form = $("#log_usr");    
+    //disable the button so we can't resubmit while we wait
+    $("#submitForm",form).attr("disabled","disabled");
+    var u = $("#zm_username", form).val();
+    var p = $("#zm_password", form).val();
+    if(u != '' && p!= '') {
+	$.ajax({
+					  type: "GET",
+                      url: "http://www.mobilegatewaypanama.com/movil/login.php",
+                      data: ({zm_username: u,zm_password: p}),
+                      cache: false,
+                      dataType: "json",
+                      success: onSuccess
+	   });
+    } else {
+        navigator.notification.alert("Debe ingresar el usuario y la contraseña para continuar.", function() {},"Datos Insuficientes","Regresar");
+        $("#submitForm").removeAttr("disabled");
     }
-	
-	function alertDismissed() {
-    navigator.app.exitApp();
+    return false;
 }
 
-function showAlert() {
-        navigator.notification.alert(
-            'Lo sentimos pero necesitas data activa para usar esta aplicación!',  // message
-            alertDismissed,         // callback
-            'Alerta',            // title
-            'Cerrar'                  // buttonName
-        );
-		navigator.notification.beep(3);
-    }
-	
-	function init() {
-        document.addEventListener("deviceready", onDeviceReady, false);
-		document.addEventListener("backbutton",showConfirm, false);	
-    }
-	
-	function showConfirm() {
-    navigator.notification.confirm(
-        '¿Desea cerrar la aplicación?',  // message
-        navigator.app.exitApp(),              // callback to invoke with index of button pressed
-        'Alerta',            // title
-        'Sí,No'          // buttonLabels
-    );
-}		
-        </script>
+function onSuccess(data){
+	var JSONObject = data; 
+            if(JSONObject.response != 'false') {          
+			navigator.app.loadUrl('http://www.mobilegatewaypanama.com/movil/index.php?zm_username='+JSONObject.Username+'&zm_cel='+JSONObject.UserCel);
+            } else if(JSONObject.response == 'false'){
+                navigator.notification.alert("Sus datos de acceso son incorrectos!", function() {},"Error en sus Datos","Regresar");
+            }
+         $("#submitForm").removeAttr("disabled");
+        }
+</script>
+
     </head>
     <body onLoad="init()">
-	<div data-role="page" id="page1">
-<div align="center" style="padding: 15px" data-role="content">
-                <div style=" text-align:center">
-                		<h3>Otra Producción de</h3>
-						<img src="http://www.mobilegatewaypanama.com/images/mobile/logo_pwf.png" width="300" height="164">
-<p>Creamos experiencias únicas para los usuarios de sus aplicaciones web, mobile y tablet.</p>
-                		<p>Estamos a su disposición para ofrecerle una solución proactiva a sus necesidades.</p>
-						<p>&nbsp;</p>
-                		<a data-role="button" data-transition="none" data-theme="b" href="mailto:bmunoz@panamawebfactory.com">
-                    Contáctenos
-                </a>
-				<p>&nbsp;</p>
-				<p class="copyright" align="center">Derechos Reservados &copy; Panama Web Factory, Inc.</p>
-				</div>
-            </div>
-
-    </div>
+	<div data-role="page" id="login">
+	<div data-role="header">
+		<h1 align="center"><img src="logo_mmovil.png" width="113" height="43" alt="Más Movil Shopping App"></h1>
+	</div>
+	<div data-role="content">
+	<div data-iscroll="scroller">	
+		<form id="log_usr" onSubmit="handleLogin();"> 
+						<p align="center"><strong>Ingrese sus claves de acceso</strong></p>
+<div data-role="fieldcontain" align="center">								<label for="zm_username">Usuario</label>							<input name="zm_username" type="text" id="zm_username" value="" placeholder="Usuario"/>				<label for="zm_password">Contraseña</label>						<input name="zm_password" type="password" id="zm_password" value="" placeholder="Contraseña"/>
+							<fieldset class="ui-grid-a">
+				<div class="ui-block-a"><button type="submit" data-icon="checkbox-on" data-theme="e" id="submitForm">Ingresar</button></div>
+				<div class="ui-block-b"><button type="reset" data-icon="delete" data-theme="c">Borrar</button></fieldset>
+		</form></div>
+						<p align="center">Si aún no tiene sus códigos de acceso, puede registrarse gratis presionando el botón abajo</p>
+						
+		<a href="#" data-icon="plus" data-role="button" data-theme="b" onclick="showConfirm();">Registrarme</a>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+	</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<p align="right">Powered by <img src="logo_zellpay_app.png" alt="Zellpay Panama" width="115" height="35" align="absmiddle"></p>
+	</div>
+</div>
 	</body>
 </html>
 

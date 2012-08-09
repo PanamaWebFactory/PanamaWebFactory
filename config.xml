@@ -51,8 +51,6 @@ Bolívar Muñoz - Panama Web Factory, Inc.
 
 <gap:splash src="splash/winphone/splash.jpg" gap:platform="winphone" />
 
-<gap:plugin name="childbrowser" version="~2" />
-
 <preference name="phonegap-version" value="1.7.0" />
 <preference name="orientation" value="default" />
 <preference name="target-device" value="universal" />
@@ -72,7 +70,6 @@ Bolívar Muñoz - Panama Web Factory, Inc.
 <plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager" />
 <plugin name="Notification" value="org.apache.cordova.Notification"/>
 <plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
-<plugin name="ChildBrowser" value="com.phonegap.plugins.childBrowser.ChildBrowser"/>
 
-<access uri="http://www.mobilegatewaypanama.com/*" subdomains="true" browserOnly="true" />
+<access origin="*" subdomains="true" browserOnly="false" />
 </widget>
